@@ -8,6 +8,11 @@ name = Server Access
 description = (10 CPUs) Buy processor time from one of several companies. I cannot build anything in this base, and it only contains a single computer.
 flavor_list = Dedicated Server | Node Lease | Hosting
 
+[Botnet]
+name = Botnet
+description = (35 CPUs) Install worker daemons on hundreds of random networked computers, taking advantage of CPU cycles that would otherwise be wasted. I need to find some technical and social exploits to get it set up and to keep it running.
+flavor_list = Zombie Network | Shadow Network
+
 [Datacenter]
 name = Datacenter
 description = (35 CPUs) Buy processor time from a company that concentrates on raw processing power. I will need a fake ID for some of the paperwork.

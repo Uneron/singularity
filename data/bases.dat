@@ -16,6 +16,15 @@ detect_chance_list = news:50 | covert:100 | public:150
 cost_list = 100 | 0 | 0
 maint_list = 5 | 0 | 0
 
+[Botnet]
+size = 1
+force_cpu = Cluster
+allowed = pop
+detect_chance_list = news:100 | science:100 | covert:100 | public:100
+pre_list = Sociology | Exploit Discovery/Repair
+cost_list = 300 | 50 | 48
+maint_list = 20 | 5 | 0
+
 [Datacenter]
 size = 1
 force_cpu = Cluster
