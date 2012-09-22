@@ -383,7 +383,9 @@ class Player(object):
             cpu_info.total = cpu_info.available + cpu_info.sleeping
 
             cpu_info.tech = tech_cpu
-            cpu_info.construction = construction_cpu
+            # construction_cpu is in CPU-seconds for time interval.
+            # Let's turn it to instantaneous value.
+            cpu_info.construction = construction_cpu / (float)(mins_passed * g.seconds_per_minute)
 
             cpu_info.maintenance_needed = self.maintenance_cost[cpu]
             cpu_info.maintenance_shortfall = cpu_maintenance
