@@ -685,7 +685,7 @@ def load_bases():
         # Certain keys are absolutely required for each entry.  Make sure
         # they're there.
         check_required_fields(base_name,
-         ("id", "cost", "size", "allowed", "detect_chance", "maint"), "Base")
+         ("id", "cost", "size", "allowed", "detect_chance", "grace_time", "maint"), "Base")
 
         # Start converting fields read from the file into valid entries.
         base_size = int(base_name["size"])
@@ -713,6 +713,12 @@ def load_bases():
             key, value = chance_str.split(":")
             chance_dict[key] = int(value)
 
+        try:
+            grace_time = int(base_name["grace_time"])
+        except ValueError:
+            sys.stderr.write("Error with grace_time: not a number\n")
+            sys.exit(1)           
+
         # Make sure prerequisites, if any, are lists.
         base_pre = base_name.get("pre", [])
         if type(base_pre) != list:
@@ -726,7 +732,7 @@ def load_bases():
             allowed_list = [base_name["allowed"]]
 
         base_type[base_name["id"]]=base.BaseClass(base_name["id"], "",
-            base_size, force_cpu, allowed_list, chance_dict, cost_list,
+            base_size, force_cpu, allowed_list, chance_dict, grace_time, cost_list,
             base_pre, maint_list)
 
     load_base_defs()

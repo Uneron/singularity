@@ -118,7 +118,6 @@ class Player(object):
                        "covert":  Group("covert",  suspicion_decay =  50),
                        "public":  Group("public",  suspicion_decay = 200)}
 
-        self.grace_multiplier = 200
         self.last_discovery = self.prev_discovery = ""
 
         self.maintenance_cost = array((0,0,0), long)

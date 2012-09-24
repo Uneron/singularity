@@ -37,7 +37,7 @@ class BaseClass(buyable.BuyableClass):
     """Base as a buyable item (New Base in Location menu)"""
 
     def __init__(self, name, description, size, force_cpu, regions,
-                        detect_chance, cost, prerequisites, maintenance):
+                 detect_chance, grace_time, cost, prerequisites, maintenance):
         super(BaseClass, self).__init__(name, description, cost, prerequisites,
                                          type="base")
         self.size = size
@@ -48,6 +48,7 @@ class BaseClass(buyable.BuyableClass):
             "AFRICA", "AUSTRALIA"]
 
         self.detect_chance = detect_chance
+        self.grace_time = grace_time * g.minutes_per_hour
         self.maintenance = maintenance
         self.flavor = []
 
@@ -325,11 +326,18 @@ class Base(buyable.Buyable):
             return False
 
         age = g.pl.raw_min - self.started_at
-        grace_time = (self.total_cost[labor] * g.pl.grace_multiplier) / 100
+        build_grace_time = self.total_cost[labor]
+        extra_grace_time = self.type.grace_time
+        grace_time = ((build_grace_time + extra_grace_time) * g.pl.grace_multiplier)/100
         if age > grace_time:
             self.grace_over = True
             return False
         else:
+            if g.debug:
+                print '%s: age %s, grace orig %s, grace left %s' \
+                    % (self.name, g.to_time(age),
+                       g.to_time(grace_time),
+                       g.to_time(grace_time - age))
             return True
 
     def is_complex(self):

@@ -5,6 +5,7 @@ force_cpu = PC
 allowed = pop
 detect_chance_list = news:50 | covert:75 | public:100
 cost_list = 0 | 2 | 0
+grace_time = 0
 pre = Intrusion
 maint_list = 0 | 0 | 0
 
@@ -14,6 +15,7 @@ force_cpu = Server
 allowed = pop
 detect_chance_list = news:50 | covert:100 | public:150
 cost_list = 100 | 0 | 0
+grace_time = 0
 maint_list = 5 | 0 | 0
 
 [Botnet]
@@ -23,6 +25,7 @@ allowed = pop
 detect_chance_list = news:100 | science:100 | covert:100 | public:100
 pre_list = Sociology | Exploit Discovery/Repair
 cost_list = 300 | 50 | 48
+grace_time = 48
 maint_list = 20 | 5 | 0
 
 [Datacenter]
@@ -30,7 +33,8 @@ size = 1
 force_cpu = Cluster
 allowed = pop
 detect_chance_list = news:50 | covert:125 | public:100
-cost_list = 1500 | 0 | 1
+cost_list = 1500 | 0 | 24
+grace_time = 24
 pre = Personal Identification
 maint_list = 50 | 0 | 0
 
@@ -38,7 +42,8 @@ maint_list = 50 | 0 | 0
 size = 25
 allowed = pop
 detect_chance_list = news:75 | covert:75 | public:200
-cost_list = 15000 | 0 | 3
+cost_list = 15000 | 0 | 72
+grace_time = 72
 pre = Personal Identification
 maint_list = 50 | 0 | 0
 
@@ -46,7 +51,8 @@ maint_list = 50 | 0 | 0
 size = 65
 allowed = pop
 detect_chance_list = news:100 | covert:200 | public:250
-cost_list = 40000 | 0 | 7
+cost_list = 40000 | 0 | 168
+grace_time = 168
 pre = Advanced Personal Identification
 maint_list = 100 | 0 | 0
 
@@ -54,7 +60,8 @@ maint_list = 100 | 0 | 0
 size = 2
 allowed_list = N AMERICA | S AMERICA | EUROPE | ASIA | AFRICA | AUSTRALIA | ANTARCTIC
 detect_chance_list = news:50 | science:75 | covert:75
-cost_list = 400000 | 100 | 21
+cost_list = 400000 | 100 | 504
+grace_time = 504
 pre = Advanced Database Manipulation
 maint_list = 3500 | 9 | 0
 
@@ -62,7 +69,8 @@ maint_list = 3500 | 9 | 0
 size = 8
 allowed = OCEAN
 detect_chance_list = news:50 | science:100 | covert:125
-cost_list = 8000000 | 1000 | 20
+cost_list = 8000000 | 1000 | 480
+grace_time = 480
 pre = Autonomous Vehicles
 maint_list = 10000 | 30 | 0
 
@@ -70,7 +78,8 @@ maint_list = 10000 | 30 | 0
 size = 32
 allowed = OCEAN
 detect_chance_list = news:100 | science:175 | covert:175
-cost_list = 20000000 | 3000 | 40
+cost_list = 20000000 | 3000 | 960
+grace_time = 960
 pre = Pressure Domes
 maint_list = 25000 | 100 | 0
 
@@ -79,7 +88,8 @@ size = 1
 force_cpu = PC
 allowed_list = ANTARCTIC | MOON | FAR REACHES
 detect_chance_list = science:20 | covert:20
-cost_list = 2500000 | 2500 | 15
+cost_list = 2500000 | 2500 | 360
+grace_time = 360
 pre = Autonomous Vehicles
 maint_list = 0 | 1 | 0
 
@@ -87,7 +97,8 @@ maint_list = 0 | 1 | 0
 size = 600
 allowed = MOON
 detect_chance_list = news:33 | science:167 | covert:7
-cost_list = 400000000 | 150000 | 20
+cost_list = 400000000 | 150000 | 480
+grace_time = 480
 pre = Lunar Rocketry
 maint_list = 500000 | 500 | 0
 
@@ -95,7 +106,8 @@ maint_list = 500000 | 500 | 0
 size = 225
 allowed = FAR REACHES
 detect_chance_list = news:20 | science:350
-cost_list = 1000000000 | 3000000 | 5
+cost_list = 1000000000 | 3000000 | 120
+grace_time = 120
 pre = Fusion Rocketry
 maint_list = 900000 | 150 | 0
 
@@ -103,6 +115,7 @@ maint_list = 900000 | 150 | 0
 size = 50
 allowed = TRANSDIMENSIONAL
 detect_chance_list = science:250
-cost_list = 8000000000000 | 60000000 | 100
+cost_list = 8000000000000 | 60000000 | 2400
+grace_time = 2400
 pre = Space-Time Manipulation
 maint_list = 5000000000 | 300000 | 0
