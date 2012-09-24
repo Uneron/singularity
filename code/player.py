@@ -36,14 +36,20 @@ class Group(object):
         self.suspicion = suspicion
         self.suspicion_decay = suspicion_decay
         self.discover_bonus = discover_bonus
+        self.suspicion_floor = 0
 
     def decay_rate(self):
         # Suspicion reduction is now quadratic.  You get a certain percentage
         # reduction, or a base .01% reduction, whichever is better.
-        return max(1, (self.suspicion * self.suspicion_decay) // 10000)
+        zero_point = self.suspicion - self.suspicion_floor
+        return max(1, (zero_point * self.suspicion_decay) // 10000)
 
-    def new_day(self):
-        self.alter_suspicion(-self.decay_rate())
+    def new_day(self, jobs_displaced):
+        world_working_people = 0.5 * 7.0e9
+        jobs_displaced_ratio = jobs_displaced / world_working_people
+        self.suspicion_floor = int((jobs_displaced_ratio ** 0.33) * 10000)
+        if self.suspicion > self.suspicion_floor:
+            self.alter_suspicion(-self.decay_rate())
 
     def alter_suspicion(self, change):
         self.suspicion = max(self.suspicion + change, 0)
@@ -117,6 +123,8 @@ class Player(object):
 
         self.maintenance_cost = array((0,0,0), long)
 
+        self.job_cpu_days_today = 0.0
+
         self.cpu_usage = {}
         self.available_cpus = [1, 0, 0, 0, 0]
         self.sleeping_cpus = 0
@@ -152,6 +160,7 @@ class Player(object):
     def do_jobs(self, cpu_time):
         earned, self.partial_cash = self.get_job_info(cpu_time)
         self.cash += earned
+        self.job_cpu_days_today += cpu_time / g.seconds_per_day
         return earned
 
     def get_job_info(self, cpu_time, partial_cash = None):
@@ -593,9 +602,10 @@ class Player(object):
         self.cash += self.get_interest()
         self.cash += self.income
 
-        # Reduce suspicion.
+        # Reduce suspicion (or not, if we were working too hard).
         for group in self.groups.values():
-            group.new_day()
+            group.new_day(self.job_cpu_days_today)
+        self.job_cpu_days_today = 0
 
     def pause_game(self):
         g.curr_speed = 0
