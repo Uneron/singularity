@@ -540,7 +540,11 @@ class MapScreen(dialog.Dialog):
                 maint_cpu += base.maintenance[1]
             detect_chance = base.get_detect_chance()
             for group in g.player.group_list:
-                detects_per_day[group] += detect_chance[group] / 10000.
+                detects_per_day[group] = \
+                    1.0 - (1.0 - detects_per_day[group]) \
+                          * (1.0 - detect_chance[group] / 10000.)
+            for group, expected_value in base.suspicion_expectancy().iteritems():
+                expected_suspicion[group] += expected_value
 
         if cpu_pool < maint_cpu:
             self.cpu_display.color = gg.colors["red"]
