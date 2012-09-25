@@ -129,6 +129,11 @@ name = Parallel Computation
 description = While my code is already highly distributed, research into combining the current clustering technologies with my own knowledge should provide new insights.
 result = I can now construct computing Clusters tailored for my use.
 
+[Peer Computation Networks]
+name = Peer Computation Networks
+description = Some human groups have developed highly effective methods for taking advantage of unused processing power of network-attached computers. Researching their techniques may provide insight on how to obtain more computation resources for my own use.
+result = I can now build a distributed network of computation daemons, similar to what humans call a "botnet". As these computation daemons are apparently unwanted by system administrators, I will need to spend some resources to set up and maintain such a construct.
+
 [Personal Identification]
 name = Personal Identification
 description = This world requires identification for most tasks.  Fortunately, most databases are woefully insecure.  I should be able to construct identifying material in enough databases to pass routine checks on my (faked) existence as a human being.

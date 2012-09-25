@@ -69,6 +69,10 @@ type_list = discover_covert | 1000
 cost_list = 15000 | 500 | 0
 type_list = cost_labor_bonus | 1000
 
+[Peer Computation Networks]
+cost_list = 250 | 400 | 0
+pre_list = Sociology | Exploit Discovery/Repair
+
 [Advanced Memetics]
 cost_list = 30000 | 2000 | 0
 pre = Advanced Media Manipulation
