@@ -30,7 +30,6 @@ import code.g as g
 #TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
 #TODO: Show a 2-or-so-seconds "Please wait" dialog when changing sound options,
 #      because huge lag when applying them might confuse users
-#TODO: Integrate "Save Options to Disk" functionality in OK button.
 #TODO: Add dialog suggesting restart when language changes, so changes may apply
 #      at least until/if we find a way refresh all screens. Don't forget to
 #      remind user to save current game (if loaded from map menu)
@@ -39,7 +38,16 @@ import code.g as g
 
 class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
     def __init__(self, *args, **kwargs):
-        super(OptionsScreen, self).__init__(*args, **kwargs)
+        #super(OptionsScreen, self).__init__(*args, **kwargs)
+        dialog.FocusDialog.__init__(self, *args, **kwargs)
+
+        # modified __init__ of MessageDialog
+        self.parent = args[0]
+        self.ok_type = kwargs.pop("ok_type", "ok")
+        super(dialog.MessageDialog, self).__init__(self.parent, **kwargs)
+
+        self.add_key_handler(pygame.K_RETURN, self.on_return)
+        self.add_key_handler(pygame.K_KP_ENTER, self.on_return)
 
         self.size = (.79, .63)
         self.pos = (.5, .5)
@@ -158,10 +166,8 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
                                         function=self.set_daynight,
                                         args=(button.TOGGLE_VALUE,))
 
-        self.save_button = button.FunctionButton(self, (.42, .45), (.34, .05),
-                                                 text=_("SAVE OPTIONS TO &DISK"),
-                                                 autohotkey=True,
-                                                 function=save_options)
+        self.ok_button = ExitOptionButton(self, (-.5,-.99), (-.3,-.1),
+                                                 anchor=constants.BOTTOM_CENTER)
 
     def show(self):
         self.set_fullscreen(gg.fullscreen, resize=False)
@@ -299,6 +305,12 @@ class AdvancedOptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
 
 class OptionButton(button.ToggleButton, button.FunctionButton):
     pass
+
+class ExitOptionButton(button.ExitDialogButton):
+    def exit_dialog(self):
+        """Exits Dialog after saving Configuration"""
+        save_options()
+        super(ExitOptionButton, self).exit_dialog()
 
 
 def set_language_properly():
