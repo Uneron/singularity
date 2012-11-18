@@ -22,7 +22,7 @@
 import os.path
 import pygame
 
-fullscreen = False
+fullscreen = True
 
 #colors:
 colors = dict(
