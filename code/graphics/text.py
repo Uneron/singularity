@@ -252,7 +252,6 @@ class Text(widget.BorderedWidget):
         return do_bisect(left, right, test_size)
 
     def pick_font_size(self, dimensions, break_words=True):
-        return 15
         if dimensions[0]:
             width = int((dimensions[0] - 4) * self.shrink_factor)
         else:

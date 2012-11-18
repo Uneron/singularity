@@ -33,14 +33,12 @@ from code.graphics.resolution import default_screen_size, resolutions
 #      at least until/if we find a way refresh all screens. Don't forget to
 #      remind user to save current game (if loaded from map menu)
 #TODO: Add enable/disable Music
-#
 
 class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
     def __init__(self, *args, **kwargs):
-        #super(OptionsScreen, self).__init__(*args, **kwargs)
         dialog.FocusDialog.__init__(self, *args, **kwargs)
 
-        # modified __init__ of MessageDialog
+        # heavily modified __init__ of MessageDialog
         self.parent = args[0]
         self.ok_type = kwargs.pop("ok_type", "ok")
         super(dialog.MessageDialog, self).__init__(self.parent, **kwargs)

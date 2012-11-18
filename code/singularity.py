@@ -181,7 +181,6 @@ olpc_options.add_option("--xo1", action="store_const",
 olpc_options.add_option("--ebook", help="enables gamepad buttons for use in ebook mode.  D-pad moves mouse, check is click.  O speeds up time, X slows down time, and square stops time.",
                         action="store_true", default=False)
 parser.add_option_group(olpc_options)
-
 hidden_options = optparse.OptionGroup(parser, "Hidden Options")
 hidden_options.add_option("-p", help="(ignored)", metavar=" ")
 hidden_options.add_option("-d", "--debug", help="for finding bugs",
