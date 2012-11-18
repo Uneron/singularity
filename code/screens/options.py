@@ -23,11 +23,10 @@ import ConfigParser
 import pygame
 import json
 
-
 from code.graphics import constants, dialog, button, listbox, text, g as gg
 import code.g as g
+from code.graphics.resolution import default_screen_size, resolutions
 
-#TODO: Consider default to Fullscreen. And size 1024x768. Welcome 2012!
 #TODO: Show a 2-or-so-seconds "Please wait" dialog when changing sound options,
 #      because huge lag when applying them might confuse users
 #TODO: Add dialog suggesting restart when language changes, so changes may apply
@@ -106,7 +105,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
         def xpos(i): return .16 + .16 *    (i%4)
         def ypos(i): return .08 + .07 * int(i/4)
 
-        for i, (xres,yres) in enumerate(gg.resolutions):
+        for i, (xres,yres) in enumerate(resolutions):
             self.resolution_group.add(OptionButton(self,
                                                    (xpos(i), ypos(i)),
                                                    (.14, .05),
@@ -125,7 +124,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
 
         self.resolution_custom_horiz = \
             text.EditableText(self, (xpos(1), ypos(i+1)), (.14, .05),
-                              text=str(gg.default_screen_size[0]),
+                              text=str(default_screen_size[0]),
                               borders=constants.ALL,
                               border_color=gg.colors["white"],
                               background_color=(0,0,50,255))
@@ -139,7 +138,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
 
         self.resolution_custom_vert = \
             text.EditableText(self, (xpos(2), ypos(i+1)), (.14, .05),
-                              text=str(gg.default_screen_size[1]),
+                              text=str(default_screen_size[1]),
                               borders=constants.ALL,
                               border_color=gg.colors["white"],
                               background_color=(0,0,50,255))
@@ -180,13 +179,13 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
         self.daynight_toggle.set_active(g.daynight)
         custom = True
         for res_button in self.resolution_group:
-            res_button.set_active(res_button.args == (gg.screen_size,))
+            res_button.set_active(res_button.args == (screen_size,))
             if res_button.active:
                 custom = False
         if custom:
             self.resolution_custom.set_active(True)
-            self.resolution_custom_horiz.text = str(gg.screen_size[0])
-            self.resolution_custom_vert.text = str(gg.screen_size[1])
+            self.resolution_custom_horiz.text = str(screen_size[0])
+            self.resolution_custom_vert.text = str(screen_size[1])
 
         self.language_choice.list_pos = [i for i, (code, _)
                                          in enumerate(self.languages)
@@ -195,10 +194,10 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
         retval = super(OptionsScreen, self).show()
         if self.resolution_custom.active:
             try:
-                old_size = gg.screen_size
-                gg.screen_size = (int(self.resolution_custom_horiz.text),
+                old_size = screen_size
+                screen_size = (int(self.resolution_custom_horiz.text),
                                   int(self.resolution_custom_vert.text))
-                if gg.screen_size != old_size:
+                if screen_size != old_size:
                     dialog.Dialog.top.needs_resize = True
             except ValueError:
                 pass
@@ -249,7 +248,7 @@ class OptionsScreen(dialog.FocusDialog, dialog.MessageDialog):
         g.daynight = value
 
     def set_resolution(self, value):
-        gg.screen_size = value
+        screen_size = value
         dialog.Dialog.top.needs_resize = True
 
     def set_resolution_custom(self):
@@ -333,8 +332,8 @@ def save_options():
     prefs.set("Preferences", "nosound", str(g.nosound))
     prefs.set("Preferences", "grab", str(pygame.event.get_grab()))
     prefs.set("Preferences", "daynight", str(g.daynight))
-    prefs.set("Preferences", "xres", str(gg.screen_size[0]))
-    prefs.set("Preferences", "yres", str(gg.screen_size[1]))
+    prefs.set("Preferences", "xres", str(screen_size[0]))
+    prefs.set("Preferences", "yres", str(screen_size[1]))
     prefs.set("Preferences", "lang", g.language)
     prefs.set("Preferences", "soundbuf", str(g.soundbuf))
 

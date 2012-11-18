@@ -22,6 +22,7 @@ import pygame
 from numpy import array
 
 import g
+import resolution
 import constants
 
 def unmask(widget):
@@ -175,7 +176,7 @@ class Widget(object):
 
     def _parent_size(self):
         if self.parent == None:
-            return g.screen_size
+            return resolution.screen_size
         else:
             return self.parent.real_size
 
@@ -188,7 +189,7 @@ class Widget(object):
         size = list(self.size)
         for i in range(2):
             if size[i] > 0:
-                size[i] = int(size[i] * g.screen_size[i])
+                size[i] = int(size[i] * resolution.screen_size[i])
             elif size[i] < 0:
                 size[i] = int( (-size[i]) * parent_size[i] )
 
@@ -211,7 +212,7 @@ class Widget(object):
         my_size = self.real_size
 
         if self.pos[0] >= 0:
-            hpos = int(self.pos[0] * g.screen_size[0])
+            hpos = int(self.pos[0] * resolution.screen_size[0])
         else:
             hpos = - int(self.pos[0] * parent_size[0])
 
@@ -223,7 +224,7 @@ class Widget(object):
             hpos -= my_size[0]
 
         if self.pos[1] >= 0:
-            vpos = int(self.pos[1] * g.screen_size[1])
+            vpos = int(self.pos[1] * resolution.screen_size[1])
         else:
             vpos = - int(self.pos[1] * parent_size[1])
 

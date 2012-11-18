@@ -48,6 +48,9 @@ pygame.init()
 pygame.font.init()
 pygame.key.set_repeat(1000, 50)
 
+# Can only be loaded after pygame init
+import graphics.resolution
+
 # Manually "pre-parse" command line arguments for -s|--singledir and --multidir,
 # so g.get_save_folder reports the correct location of preferences file
 for parser in sys.argv[1:]:
@@ -115,13 +118,13 @@ if os.path.exists(save_loc):
             sys.stderr.write("Invalid or missing 'soundbuf' setting in preferences.\n")
 
         try:
-            graphics.g.screen_size = (prefs.getint("Preferences", "xres"),
-            graphics.g.screen_size[1])
+            graphics.resolution.screen_size = (prefs.getint("Preferences", "xres"),
+            graphics.resolution.screen_size[1])
         except:
             sys.stderr.write("Invalid or missing 'xres' resolution in preferences.\n")
 
         try:
-            graphics.g.screen_size = (graphics.g.screen_size[0],
+            graphics.resolution.screen_size = (graphics.g.screen_size[0],
             prefs.getint("Preferences", "yres"))
         except:
             sys.stderr.write("Invalid or missing 'yres' resolution in preferences.\n")
@@ -159,9 +162,9 @@ parser.add_option("--soundbuf", type="int",
 display_options = optparse.OptionGroup(parser, "Display Options")
 display_options.add_option("-r", "--res", "--resolution", dest="resolution",
                            help="set resolution to custom RES (default %dx%d)" %
-                           graphics.g.default_screen_size,
+                           graphics.resolution.default_screen_size,
                            metavar="RES")
-for res in ["%dx%d" % res for res in graphics.g.resolutions]:
+for res in ["%dx%d" % res for res in graphics.resolution.resolutions]:
     display_options.add_option("--" + res, action="store_const",
                                dest="resolution", const=res,
                                help="set resolution to %s" % res)
@@ -194,10 +197,10 @@ if options.language is not None:
 if options.resolution is not None:
     try:
         xres, yres = options.resolution.split("x")
-        graphics.g.screen_size = (int(xres), int(yres))
+        graphics.resolution.screen_size = (int(xres), int(yres))
     except Exception:
         parser.error("Resolution must be of the form <h>x<v>, e.g. %dx%d." %
-                     graphics.g.default_screen_size)
+                     graphics.resolution.default_screen_size)
 if options.grab is not None:
     pygame.event.set_grab(options.grab)
 if options.fullscreen is not None:
@@ -231,7 +234,7 @@ g.load_items()
 g.load_bases()
 
 # Initialize the screen with a dummy size.
-pygame.display.set_mode(graphics.g.screen_size)
+pygame.display.set_mode(graphics.resolution.screen_size)
 
 g.init_graphics_system()
 g.reinit_mixer()
