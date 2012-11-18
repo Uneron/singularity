@@ -23,7 +23,7 @@ import os.path
 import pygame
 
 #initial screen size. Can be set via command-line option or preferences file
-default_screen_size = (800, 600)
+default_screen_size = (1024, 768)
 
 #current screen sizes
 screen_size = default_screen_size
